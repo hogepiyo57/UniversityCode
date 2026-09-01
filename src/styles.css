@@ -12,12 +12,14 @@ h1, h2, p { margin-top: 0; }
 
 .app-shell { width: min(1280px, calc(100% - 48px)); margin: 0 auto; padding: 36px 0 64px; }
 .app-header { border-bottom: 1px solid #dbe4ea; margin-bottom: 22px; padding-bottom: 20px; }
+.header-content { align-items: center; display: flex; gap: 24px; justify-content: space-between; }
 .title-row { align-items: center; display: flex; flex-wrap: wrap; gap: 12px 22px; }
 h1 { font-size: clamp(2rem, 4vw, 2.8rem); letter-spacing: .025em; margin-bottom: 0; }
 h2 { font-size: 1.2rem; margin-bottom: 0; }
 .lead { color: #52657a; margin: 10px 0 0; }
 .eyebrow { color: #087d7b; font-size: .72rem; font-weight: 800; letter-spacing: .12em; margin-bottom: 5px; }
 .source-note { border-left: 3px solid #1c9b99; color: #506379; font-size: .86rem; margin: 0; padding-left: 10px; }
+.app-logo { flex: 0 0 auto; height: 96px; object-fit: contain; width: 96px; }
 
 .search-workspace { display: grid; gap: 20px; grid-template-columns: minmax(300px, .85fr) minmax(420px, 1.35fr); }
 .search-panel, .candidate-panel, .result-panel { background: #fff; border: 1px solid #dbe4ea; border-radius: 12px; box-shadow: 0 4px 16px rgb(24 45 70 / 5%); padding: 22px; }
@@ -75,6 +77,8 @@ thead th:last-child { border-top-right-radius: 8px; }
 @media (max-width: 560px) {
   .app-shell { width: min(100% - 22px, 1280px); padding-bottom: 36px; }
   .search-panel, .candidate-panel, .result-panel { padding: 17px; }
+  .header-content { align-items: flex-start; gap: 12px; }
+  .app-logo { height: 72px; width: 72px; }
   .source-note { font-size: .78rem; }
   .candidate-list button { align-items: flex-start; flex-direction: column; gap: 3px; }
   .result-heading { display: block; }

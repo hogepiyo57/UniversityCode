@@ -34,13 +34,16 @@ export default function App() {
   return (
     <main className="app-shell">
       <header className="app-header">
-        <div>
+        <div className="header-content">
+          <div>
           <p className="eyebrow">UNIVERSITY CODE SEARCH</p>
           <div className="title-row">
             <h1>大学コード検索</h1>
             <p className="source-note">ベネッセ総合学力テスト（2025年高２生・１月）のコード番号表を参照</p>
           </div>
           <p className="lead">大学名のよみがなまたは漢字を入力して、学部・学科コードを確認できます。</p>
+          </div>
+          <img className="app-logo" src={`${import.meta.env.BASE_URL}app-logo.png`} alt="総企印のアプリ屋さん" />
         </div>
       </header>
 
