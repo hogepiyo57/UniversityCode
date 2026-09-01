@@ -11,6 +11,7 @@ export function findUniversities(universities: University[], input: string): Uni
   const query = normalizeReading(input);
   if (!query) return [];
 
-  return universities.filter((university) => [university.reading, ...university.aliases]
-    .some((reading) => normalizeReading(reading).includes(query)));
+  return universities.filter((university) => university.name.includes(query)
+    || [university.reading, ...university.aliases]
+      .some((reading) => normalizeReading(reading).includes(query)));
 }

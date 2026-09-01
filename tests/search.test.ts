@@ -22,6 +22,10 @@ describe('findUniversities', () => {
     expect(findUniversities(universities, 'あさひかわいか')).toEqual([universities[0]]);
   });
 
+  it('大学名の漢字を1文字から部分一致で検索できる', () => {
+    expect(findUniversities(universities, '東')).toEqual([universities[1]]);
+  });
+
   it('候補がなければ空配列を返す', () => {
     expect(findUniversities(universities, 'なし')).toEqual([]);
   });
