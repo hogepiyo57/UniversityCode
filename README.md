@@ -25,6 +25,88 @@ npm run dev
 npm run build
 ```
 
+## GitHub Pagesで公開する手順
+
+このリポジトリはViteでビルドするため、GitHub Actionsを使って`dist`フォルダを公開します。`Deploy from a branch`ではなく、Pagesの公開元に`GitHub Actions`を選択します。
+
+### 1. Viteの公開パスを確認する
+
+`package.json`の`build`コマンドには、リポジトリ名に合わせて`--base=/UniversityCode/`を設定しています。リポジトリ名を変更した場合は、`UniversityCode`も新しいリポジトリ名へ変更します。
+
+### 2. 自動公開用のワークフローを作成する
+
+`.github/workflows/deploy-pages.yml`を作成し、次の内容を保存します。
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5
+```
+
+### 3. GitHubへpushする
+
+上記2ファイルをcommitし、`main`ブランチへpushします。
+
+```bash
+git add package.json .github/workflows/deploy-pages.yml README.md
+git commit -m "GitHub Pagesの公開設定を追加"
+git push
+```
+
+### 4. GitHub Pagesを有効にする
+
+1. [UniversityCodeリポジトリ](https://github.com/hogepiyo57/UniversityCode)を開きます。
+2. `Settings`を開きます。
+3. 左側の`Pages`を開きます。
+4. `Build and deployment`の`Source`で`GitHub Actions`を選びます。
+5. `Actions`タブで`Deploy to GitHub Pages`が成功するまで待ちます。
+
+公開後は次のURLで表示できます。
+
+<https://hogepiyo57.github.io/UniversityCode/>
+
+以後は`main`へpushすると自動的に再ビルド・再公開されます。公開に失敗した場合は、GitHubの`Actions`タブで赤くなっている処理を開いてエラーを確認します。GitHubの画面操作については[GitHub Pagesの公開元設定](https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)、Vite固有の設定については[Viteの静的サイト公開手順](https://vite.dev/guide/static-deploy.html#github-pages)を参照してください。
+
 ## 検索の仕様
 
 - ひらがなを1文字入力すると、主読み・別名読みの部分一致で候補を表示します。

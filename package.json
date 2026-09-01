@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run data:build && vite build",
+    "build": "npm run data:build && vite build --base=/UniversityCode/",
     "preview": "vite preview",
     "data:build": "node scripts/build-data.mjs",
     "data:validate": "node scripts/build-data.mjs --validate-only",
